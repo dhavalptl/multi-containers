@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  apiserver:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./app-service
+    volumes:
+      - /usr/src/app/node_modules
+      - ./app-service:/usr/src/app
+  client:
+    depends_on:
+      - apiserver
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./react-app
+    volumes:
+      - /usr/src/app/node_modules
+      - ./react-app:/usr/src/app
+  nginx:
+    restart: always
+    depends_on:
+      - apiserver
+      - client
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - "3100:80"
+    
