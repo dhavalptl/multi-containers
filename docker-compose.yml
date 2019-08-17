@@ -12,10 +12,10 @@ services:
       - apiserver
     build:
       dockerfile: Dockerfile.dev
-      context: ./react-app
+      context: ./client-app
     volumes:
       - /usr/src/app/node_modules
-      - ./react-app:/usr/src/app
+      - ./client-app:/usr/src/app
   nginx:
     restart: always
     depends_on:
